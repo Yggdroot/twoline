@@ -66,6 +66,7 @@ class Twoline(object):
         vim.current.buffer.options["bufhidden"] = "hide"
         vim.current.buffer.options["undolevels"] = -1
         vim.current.buffer.options["swapfile"] = False
+        vim.command("setlocal filetype=twoline")
 
         vim.current.window.options["list"] = False
         vim.current.window.options["number"] = False
@@ -79,21 +80,8 @@ class Twoline(object):
         vim.current.window.options["winfixwidth"] = True
         vim.current.window.options["statusline"] = "%=Total: %-3{g:Tl_TotalBufNum}"
 
-        vim.command("syn match Tl_Number         '\[\zs\d* ' containedin=ALL")
-        vim.command("syn match Tl_Normal         '\[\d* [^\]]*\]'")
-        vim.command("syn match Tl_Changed        '\[\d* [^\]]*\]+'")
-        vim.command("syn match Tl_VisualNumber   '\[\zs\d*:' containedin=ALL")
-        vim.command("syn match Tl_VisibleNormal  '\[\d*:[^\]]*\]'")
-        vim.command("syn match Tl_VisibleChanged '\[\d*:[^\]]*\]+'")
-
-        vim.command("hi Tl_Number guifg=#9dff42 guibg=NONE gui=NONE ctermfg=155 cterm=NONE")
-        vim.command("hi Tl_Normal guifg=#87ceeb guibg=NONE gui=NONE ctermfg=117 cterm=NONE")
-        vim.command("hi Tl_Changed guifg=#ff9a9a guibg=NONE gui=NONE ctermfg=210 cterm=NONE")
-        vim.command("hi Tl_VisualNumber guifg=#9dff42 guibg=#4d4d4d gui=bold ctermfg=155 ctermbg=239 cterm=bold")
-        vim.command("hi Tl_VisibleNormal guifg=#87ceeb guibg=#4d4d4d gui=bold ctermfg=117 ctermbg=239 cterm=bold")
-        vim.command("hi Tl_VisibleChanged guifg=#ff9a9a guibg=#4d4d4d gui=bold ctermfg=210 ctermbg=239 cterm=bold")
-
         vim.command("autocmd! BufEnter,BufLeave,CursorMoved <buffer> 3match none")
+        vim.command("autocmd! ColorScheme * doautoa syntax")
         vim.command("noremap <silent> <buffer> <LeftRelease> :call g:Twoline_EnterTabline()<cr><LeftRelease>")
         vim.command("noremap <silent> <buffer> <CR> :call g:Twoline_EnterTabline()<cr>")
 
