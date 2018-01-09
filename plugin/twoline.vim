@@ -135,7 +135,7 @@ class Twoline(object):
                 else:
                     return
             else:
-                tabline_win =  self._buffer_window()
+                tabline_win = self._buffer_window()
                 if tabline_win: # tabline is already shown
                     if self._buffer_count() <= 1:
                         vim.command("{}close!".format(tabline_win.number))
@@ -241,7 +241,7 @@ class Twoline(object):
                 finally:
                     vim.options['eventignore'] = saved_eventignore
                 self.update_tabline(0)
-            elif len(self._buf_list) < 2:
+            elif self._buffer_count() < 2:
                 vim.command("{}close!".format(tabline_win.number))
 
             self._tabline_buf.options["modifiable"] = True
