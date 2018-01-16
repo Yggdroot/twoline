@@ -170,14 +170,14 @@ class Twoline(object):
 
     def switch_to_next(self):
         if self._buffer_count() > 1:
-            if self._buffer_window():
+            if self._buffer_window() and vim.current.buffer in self._buf_dict:
                 vim.current.buffer = self._buf_list[(self._buf_dict[vim.current.buffer] + 1) % len(self._buf_list)]
             else:
                 vim.command("bn")
 
     def switch_to_previous(self):
         if self._buffer_count() > 1:
-            if self._buffer_window():
+            if self._buffer_window() and vim.current.buffer in self._buf_dict:
                 vim.current.buffer = self._buf_list[self._buf_dict[vim.current.buffer] - 1]
             else:
                 vim.command("bp")
