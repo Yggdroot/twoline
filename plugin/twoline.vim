@@ -138,7 +138,8 @@ class Twoline(object):
                 tabline_win = self._buffer_window()
                 if tabline_win: # tabline is already shown
                     if self._buffer_count() <= 1:
-                        vim.command("{}close!".format(tabline_win.number))
+                        # Vim:E788: Not allowed to edit another buffer now
+                        vim.command("silent! {}close!".format(tabline_win.number))
                         return
                 else:   # tabline is hidden
                     if self._buffer_count() > 1:
@@ -163,7 +164,10 @@ class Twoline(object):
         finally:
             if self._tabline_buf:
                 self._tabline_buf.options["modifiable"] = False
-            vim.current.window = orig_window
+            try:
+                vim.current.window = orig_window
+            except vim.error: # Vim:E788: Not allowed to edit another buffer now
+                pass
 
     def switch_to(self, number):
         vim.current.buffer = self._buf_list[number - 1]
