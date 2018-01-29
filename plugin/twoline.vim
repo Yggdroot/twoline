@@ -49,6 +49,7 @@ function! g:TL_tabline_init_color()
                     \ synIDattr(fg_synId, "bg", "cterm"), synIDattr(bg_synId, "bg", "cterm"),
                     \ g:TL_stl_seperator.font != "" ? "'" . g:TL_stl_seperator.font . "'" : "NONE")
     endif
+    return ""
 endfunction
 
 let s:tl_vim_enter = 0
@@ -88,8 +89,6 @@ class Twoline(object):
         vim.current.window.height = 1
         vim.current.window.cursor = (1, 0)
 
-        vim.command("call g:TL_tabline_init_color()")
-
         vim.current.buffer.options["buflisted"] = False
         vim.current.buffer.options["buftype"] = "nofile"
         vim.current.buffer.options["bufhidden"] = "hide"
@@ -107,7 +106,7 @@ class Twoline(object):
         vim.current.window.options["foldmethod"] = "manual"
         vim.current.window.options["winfixheight"] = True
         vim.current.window.options["winfixwidth"] = True
-        vim.current.window.options["statusline"] = "%=%#TL_tabline_sep_right#{0}%#TL_tabline_right# Total: %-3{{g:TL_total_buf_num}}".format(
+        vim.current.window.options["statusline"] = "%{{g:TL_tabline_init_color()}}%=%#TL_tabline_sep_right#{0}%#TL_tabline_right# Total: %-3{{g:TL_total_buf_num}}".format(
                                                         vim.eval("g:TL_stl_seperator.right"))
 
         vim.command("autocmd! BufEnter,BufLeave,CursorMoved <buffer> 3match none")
@@ -292,7 +291,8 @@ class Twoline(object):
             self._tabline_buf.options["modifiable"] = True
             try:
                 self._tabline_buf[0] = ""
-                self._buf_list = [b for b in vim.buffers if not b.options["buftype"] and b.options["buflisted"] and b.number != number]
+                self._buf_list = [b for b in vim.buffers if vim.eval("getbufvar(%d, '&buftype')" % b.number) == ""
+                                    and vim.eval("getbufvar(%d, '&buflisted')" % b.number) == "1" and b.number != number]
                 self._buf_dict = {b:i for i,b in enumerate(self._buf_list)}
                 for i, b in enumerate(self._buf_list):
                     self._tabline_buf[0] += "[{}{}{}]{}".format(i + 1, ':' if vim.eval("bufwinnr(%d)" % b.number) != '-1' else ' ',
