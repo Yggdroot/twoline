@@ -31,6 +31,7 @@ function! s:InitVar(var, value)
     endif
 endfunction
 
+call s:InitVar('g:TL_scroll_mode', 0)
 call s:InitVar('g:TL_stl_seperator', {
             \ 'left': '►',
             \ 'right': '◄',
@@ -119,9 +120,19 @@ class Twoline(object):
                     left = int(vim.eval("strdisplaywidth('%s')" % match_obj.string[:match_obj.start()]))
                     right = int(vim.eval("strdisplaywidth('%s')" % match_obj.string[:match_obj.end()]))
                     if right > rhs:
-                        vim.command("norm! {}zl".format(right - rhs))
+                        if vim.eval("g:TL_scroll_mode") == "0":
+                            vim.command("norm! {}zl".format((left + right - lhs - rhs)//2))
+                        elif vim.eval("g:TL_scroll_mode") == "1":
+                            vim.command("norm! {}zl".format(right - rhs))
+                        else:
+                            vim.command("norm! {}zl".format(left - lhs))
                     elif left < lhs:
-                        vim.command("norm! {}zh".format(lhs - left))
+                        if vim.eval("g:TL_scroll_mode") == "0":
+                            vim.command("norm! {}zh".format((lhs + rhs - left - right)//2))
+                        elif vim.eval("g:TL_scroll_mode") == "1":
+                            vim.command("norm! {}zh".format(lhs - left))
+                        else:
+                            vim.command("norm! {}zh".format(rhs - right))
 
                     vim.command("norm! g0")
                     lhs = int(vim.eval("virtcol('.')")) - 1
