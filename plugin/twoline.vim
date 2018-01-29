@@ -345,6 +345,13 @@ command! -bar TlTablineClose exec s:py "my_twoline.close()"
 command! -bar TlTablineEnable call s:DefineAutocmds() | call s:UpdateTabline(0)
 command! -bar TlTablineDisable TlTablineClose | call s:UndefineAutocmds()
 
+nnoremap <silent> <Plug>TlBufferNext :<C-U>TlBufferNext<CR>
+nnoremap <silent> <Plug>TlBufferPrev :<C-U>TlBufferPrev<CR>
+nnoremap <silent> <Plug>TlBufferDelete :<C-U>TlBufferDelete<CR>
+nnoremap <silent> <Plug>TlTablineClose :<C-U>TlTablineClose<CR>
+nnoremap <silent> <Plug>TlTablineEnable :<C-U>TlTablineEnable<CR>
+nnoremap <silent> <Plug>TlTablineDisable :<C-U>TlTablineDisable<CR>
+
 let s:TL_mode = {
             \ "n":  "Normal",
             \ "no": "Normal",
