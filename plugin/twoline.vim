@@ -38,6 +38,19 @@ call s:InitVar('g:TL_stl_seperator', {
             \ 'font': ''
             \})
 
+function! g:TL_tabline_init_color()
+    if synIDattr(synIDtrans(hlID("TL_tabline_right")), "fg", "gui") == ""
+        hi! def TL_tabline_right   gui=NONE guifg=#ebebeb guibg=#707070 cterm=NONE ctermfg=255 ctermbg=242
+
+        let fg_synId = synIDtrans(hlID("TL_tabline_right"))
+        let bg_synId = synIDtrans(hlID("StatusLine"))
+        exec printf("hi! def TL_tabline_sep_right gui=NONE guifg=%s guibg=%s cterm=NONE ctermfg=%s ctermbg=%s font=%s",
+                    \ synIDattr(fg_synId, "bg", "gui"), synIDattr(bg_synId, "bg", "gui"),
+                    \ synIDattr(fg_synId, "bg", "cterm"), synIDattr(bg_synId, "bg", "cterm"),
+                    \ g:TL_stl_seperator.font != "" ? "'" . g:TL_stl_seperator.font . "'" : "NONE")
+    endif
+endfunction
+
 let s:tl_vim_enter = 0
 
 exec s:py "<< EOF"
@@ -71,9 +84,11 @@ class Twoline(object):
         return status != buffer.vars["buf_changed"]
 
     def _create_tabline(self):
-        vim.command("topleft sp $VIM/__twoline__")
+        vim.command("silent topleft sp $VIM/__twoline__")
         vim.current.window.height = 1
         vim.current.window.cursor = (1, 0)
+
+        vim.command("call g:TL_tabline_init_color()")
 
         vim.current.buffer.options["buflisted"] = False
         vim.current.buffer.options["buftype"] = "nofile"
@@ -92,7 +107,7 @@ class Twoline(object):
         vim.current.window.options["foldmethod"] = "manual"
         vim.current.window.options["winfixheight"] = True
         vim.current.window.options["winfixwidth"] = True
-        vim.current.window.options["statusline"] = "%=%#TL_tabline_sep_right#{0}%#TL_tabline_right# Total: %-3{{g:Tl_TotalBufNum}}".format(
+        vim.current.window.options["statusline"] = "%=%#TL_tabline_sep_right#{0}%#TL_tabline_right# Total: %-3{{g:TL_total_buf_num}}".format(
                                                         vim.eval("g:TL_stl_seperator.right"))
 
         vim.command("autocmd! BufEnter,BufLeave,CursorMoved <buffer> 3match none")
@@ -185,7 +200,7 @@ class Twoline(object):
                 self._tabline_buf[0] += "[{}{}{}]{}".format(i + 1, ':' if vim.eval("bufwinnr(%d)" % b.number) != '-1' else ' ',
                                                             re.sub("[][]", "", os.path.basename(b.name)) if b.name else "--No Name--",
                                                             '+' if b.options["modified"] else '')
-            vim.command("let g:Tl_TotalBufNum = {}".format(len(self._buf_list)))
+            vim.command("let g:TL_total_buf_num = {}".format(len(self._buf_list)))
             self._adjust(orig_window.buffer)
         finally:
             if self._tabline_buf:
@@ -283,7 +298,7 @@ class Twoline(object):
                     self._tabline_buf[0] += "[{}{}{}]{}".format(i + 1, ':' if vim.eval("bufwinnr(%d)" % b.number) != '-1' else ' ',
                                                                 re.sub("[][]", "", os.path.basename(b.name)) if b.name else "--No Name--",
                                                                 '+' if b.options["modified"] else '')
-                vim.command("let g:Tl_TotalBufNum = {}".format(len(self._buf_list)))
+                vim.command("let g:TL_total_buf_num = {}".format(len(self._buf_list)))
             finally:
                 self._tabline_buf.options["modifiable"] = False
 
@@ -345,12 +360,12 @@ command! -bar TlTablineClose exec s:py "my_twoline.close()"
 command! -bar TlTablineEnable call s:DefineAutocmds() | call s:UpdateTabline(0)
 command! -bar TlTablineDisable TlTablineClose | call s:UndefineAutocmds()
 
-nnoremap <silent> <Plug>TlBufferNext :<C-U>TlBufferNext<CR>
-nnoremap <silent> <Plug>TlBufferPrev :<C-U>TlBufferPrev<CR>
-nnoremap <silent> <Plug>TlBufferDelete :<C-U>TlBufferDelete<CR>
-nnoremap <silent> <Plug>TlTablineClose :<C-U>TlTablineClose<CR>
-nnoremap <silent> <Plug>TlTablineEnable :<C-U>TlTablineEnable<CR>
-nnoremap <silent> <Plug>TlTablineDisable :<C-U>TlTablineDisable<CR>
+nnoremap <silent> <Plug>TlBufferNext :echo<CR>:silent TlBufferNext<CR>
+nnoremap <silent> <Plug>TlBufferPrev :echo<CR>:silent TlBufferPrev<CR>
+nnoremap <silent> <Plug>TlBufferDelete :echo<CR>:silent TlBufferDelete<CR>
+nnoremap <silent> <Plug>TlTablineClose :TlTablineClose<CR>
+nnoremap <silent> <Plug>TlTablineEnable :TlTablineEnable<CR>
+nnoremap <silent> <Plug>TlTablineDisable :TlTablineDisable<CR>
 
 let s:TL_mode = {
             \ "n":  "Normal",
@@ -416,15 +431,6 @@ function! s:InitColor()
     hi! def TL_stl_right_3     gui=NONE guifg=#9e9e9e guibg=#303030 cterm=NONE ctermfg=247 ctermbg=236
     hi! def TL_stl_right_4     gui=NONE guifg=#9e9e9e guibg=#303030 cterm=NONE ctermfg=247 ctermbg=236
     hi! def link TL_stl_right_5 TL_stl_blank
-
-    hi! def TL_tabline_right   gui=NONE guifg=#ebebeb guibg=#707070 cterm=NONE ctermfg=255 ctermbg=242
-
-    let fg_synId = synIDtrans(hlID("TL_tabline_right"))
-    let bg_synId = synIDtrans(hlID("StatusLine"))
-    exec printf("hi! def TL_tabline_sep_right gui=NONE guifg=%s guibg=%s cterm=NONE ctermfg=%s ctermbg=%s font=%s",
-                \ synIDattr(fg_synId, "bg", "gui"), synIDattr(bg_synId, "bg", "gui"),
-                \ synIDattr(fg_synId, "bg", "cterm"), synIDattr(bg_synId, "bg", "cterm"),
-                \ g:TL_stl_seperator.font != "" ? "'" . g:TL_stl_seperator.font . "'" : "NONE")
 
     if !has_key(g:TL_stl_seperator, "font")
         let g:TL_stl_seperator["font"] = ""
