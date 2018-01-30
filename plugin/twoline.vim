@@ -284,8 +284,10 @@ class Twoline(object):
                     vim.command("buffer {}".format(self._buf_list[index].number))
                 finally:
                     vim.options['eventignore'] = saved_eventignore
-                self.update_tabline(0)
-            elif self._buffer_count() < 2:
+
+                if self._buffer_count() > 2:
+                    self.update_tabline(0)
+            elif self._buffer_count() < 3:
                 vim.command("{}close!".format(tabline_win.number))
 
             self._tabline_buf.options["modifiable"] = True
