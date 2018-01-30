@@ -271,6 +271,8 @@ class Twoline(object):
     def buffer_deleted(self, number):
         tabline_win = self._buffer_window()
         if tabline_win:
+            buf_count = len([b for b in vim.buffers if vim.eval("getbufvar(%d, '&buftype')" % b.number) == ""
+                                and vim.eval("getbufvar(%d, '&buflisted')" % b.number) == "1" and b.number != number])
             if len(vim.windows) == 1:   # the only window is the tabline window
                 saved_eventignore = vim.options['eventignore']
                 vim.options['eventignore'] = 'all'
@@ -285,9 +287,10 @@ class Twoline(object):
                 finally:
                     vim.options['eventignore'] = saved_eventignore
 
-                if self._buffer_count() > 2:
+                if buf_count > 1:
                     self.update_tabline(0)
-            elif self._buffer_count() < 3:
+
+            elif buf_count < 2:
                 vim.command("{}close!".format(tabline_win.number))
 
             self._tabline_buf.options["modifiable"] = True
