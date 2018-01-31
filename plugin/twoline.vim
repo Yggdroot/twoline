@@ -411,7 +411,7 @@ call s:InitVar('g:TL_stl_item', s:TL_stl_item)
 call s:InitVar('g:TL_stl_origin_mode', "")
 
 function! s:InitColor()
-    hi! def TL_stl_blank       gui=NONE guifg=#9e9e9e guibg=#303030 cterm=NONE ctermfg=247 ctermbg=236
+    hi! def TL_stl_blank       gui=NONE guifg=#9e9e9e guibg=#363636 cterm=NONE ctermfg=247 ctermbg=236
     hi! def TL_stl_mode_normal gui=bold guifg=#005f00 guibg=#afdf00 cterm=bold ctermfg=22 ctermbg=148
     hi! def TL_stl_mode_insert gui=bold guifg=#044d22 guibg=#a7c18b cterm=bold ctermfg=22 ctermbg=150
     hi! def TL_stl_mode_visual gui=bold guifg=#870000 guibg=#ff8700 cterm=bold ctermfg=88 ctermbg=208
@@ -425,16 +425,16 @@ function! s:InitColor()
 
     hi! def link TL_stl_left_0 TL_stl_mode_normal
     hi! def TL_stl_left_1      gui=NONE guifg=#87ceeb guibg=#4d4d4d cterm=NONE ctermfg=117 ctermbg=239
-    hi! def TL_stl_left_2      gui=NONE guifg=#9e9e9e guibg=#303030 cterm=NONE ctermfg=247 ctermbg=236
+    hi! def TL_stl_left_2      gui=NONE guifg=#9e9e9e guibg=#363636 cterm=NONE ctermfg=247 ctermbg=236
     hi! def TL_stl_left_3      gui=NONE guifg=#87ceeb guibg=#4d4d4d cterm=NONE ctermfg=117 ctermbg=239
     hi! def TL_stl_left_4      gui=NONE guifg=#87ceeb guibg=#4d4d4d cterm=NONE ctermfg=117 ctermbg=239
     hi! def link TL_stl_left_5 TL_stl_blank
 
-    hi! def TL_stl_right_0     gui=NONE guifg=#606060 guibg=#d0d0d0 cterm=NONE ctermfg=241 ctermbg=252
-    hi! def TL_stl_right_1     gui=NONE guifg=#ebebeb guibg=#646464 cterm=NONE ctermfg=255 ctermbg=241
-    hi! def TL_stl_right_2     gui=NONE guifg=#9e9e9e guibg=#424242 cterm=NONE ctermfg=247 ctermbg=238
-    hi! def TL_stl_right_3     gui=NONE guifg=#9e9e9e guibg=#303030 cterm=NONE ctermfg=247 ctermbg=236
-    hi! def TL_stl_right_4     gui=NONE guifg=#9e9e9e guibg=#303030 cterm=NONE ctermfg=247 ctermbg=236
+    hi! def TL_stl_right_0     gui=NONE guifg=#404040 guibg=#d0d0d0 cterm=NONE ctermfg=241 ctermbg=252
+    hi! def TL_stl_right_1     gui=NONE guifg=#e8e8e8 guibg=#646464 cterm=NONE ctermfg=253 ctermbg=241
+    hi! def TL_stl_right_2     gui=NONE guifg=#afafaf guibg=#484848 cterm=NONE ctermfg=248 ctermbg=238
+    hi! def TL_stl_right_3     gui=NONE guifg=#9e9e9e guibg=#363636 cterm=NONE ctermfg=247 ctermbg=236
+    hi! def TL_stl_right_4     gui=NONE guifg=#9e9e9e guibg=#363636 cterm=NONE ctermfg=247 ctermbg=236
     hi! def link TL_stl_right_5 TL_stl_blank
 
     if !has_key(g:TL_stl_seperator, "font")
