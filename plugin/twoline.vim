@@ -171,6 +171,7 @@ class Twoline(object):
             if self._tabline_buf is None:
                 if self._buffer_count() > 1:
                     self._tabline_buf = self._create_tabline()
+                    vim.current.window = orig_window
                 else:
                     return
             else:
@@ -204,10 +205,6 @@ class Twoline(object):
         finally:
             if self._tabline_buf:
                 self._tabline_buf.options["modifiable"] = False
-            try:
-                vim.current.window = orig_window
-            except vim.error: # Vim:E788: Not allowed to edit another buffer now
-                pass
 
     def switch_to(self, number):
         vim.current.buffer = self._buf_list[number - 1]
