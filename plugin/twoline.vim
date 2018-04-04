@@ -197,7 +197,7 @@ class Twoline(object):
                                     and vim.eval("getbufvar(%d, '&buflisted')" % b.number) == "1")):
                 self._buf_list.append(b)
                 self._buf_dict[b] = i
-                self._tabline_buf[0] += "[{}{}{}]{}".format(i + 1, ':' if vim.eval("bufwinnr(%d)" % b.number) != '-1' else ' ',
+                self._tabline_buf[0] += "[{}{}{}]{}".format(i + 1, ':' if int(vim.eval("bufwinnr(%d)" % b.number)) > 1 else ' ',
                                                             re.sub("[][]", "", os.path.basename(b.name)) if b.name else "--No Name--",
                                                             '+' if b.options["modified"] else '')
             vim.command("let g:TL_total_buf_num = {}".format(len(self._buf_list)))
