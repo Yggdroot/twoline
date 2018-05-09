@@ -13,6 +13,10 @@ else
     let g:twoline_loaded = 1
 endif
 
+if v:version < 704
+    finish
+endif
+
 if has("python3")
     let s:py = "py3"
 elseif has("python")
@@ -40,10 +44,11 @@ call s:InitVar('g:TL_stl_seperator', {
 
 function! g:TL_tabline_init_color()
     if synIDattr(synIDtrans(hlID("TL_tabline_right")), "fg", "gui") == ""
-        hi! def TL_tabline_right   gui=NONE guifg=#ebebeb guibg=#707070 cterm=NONE ctermfg=255 ctermbg=242
+        hi! def TL_tabline_right gui=NONE guifg=#ebebeb guibg=#707070 cterm=NONE ctermfg=255 ctermbg=242
+        hi! def TL_tabline       gui=NONE guifg=#87ceeb guibg=#4d4d4d cterm=NONE ctermfg=117 ctermbg=239
 
         let fg_synId = synIDtrans(hlID("TL_tabline_right"))
-        let bg_synId = synIDtrans(hlID("StatusLine"))
+        let bg_synId = synIDtrans(hlID("TL_tabline"))
         exec printf("hi! def TL_tabline_sep_right gui=NONE guifg=%s guibg=%s cterm=NONE ctermfg=%s ctermbg=%s font=%s",
                     \ synIDattr(fg_synId, "bg", "gui"), synIDattr(bg_synId, "bg", "gui"),
                     \ synIDattr(fg_synId, "bg", "cterm"), synIDattr(bg_synId, "bg", "cterm"),
@@ -106,7 +111,7 @@ class Twoline(object):
         vim.current.window.options["foldmethod"] = "manual"
         vim.current.window.options["winfixheight"] = True
         vim.current.window.options["winfixwidth"] = True
-        vim.current.window.options["statusline"] = "%{{g:TL_tabline_init_color()}}%=%#TL_tabline_sep_right#{0}%#TL_tabline_right# Total: %-3{{g:TL_total_buf_num}}".format(
+        vim.current.window.options["statusline"] = "%{{g:TL_tabline_init_color()}}%#TL_tabline#%=%#TL_tabline_sep_right#{0}%#TL_tabline_right# Total: %-3{{g:TL_total_buf_num}}".format(
                                                         vim.eval("g:TL_stl_seperator.right"))
 
         vim.command("autocmd! BufEnter,BufLeave,CursorMoved <buffer> 3match none")
