@@ -114,8 +114,10 @@ class Twoline(object):
         vim.current.window.options["statusline"] = "%{{g:TL_tabline_init_color()}}%#TL_tabline#%=%#TL_tabline_sep_right#{0}%#TL_tabline_right# Total: %-3{{g:TL_total_buf_num}}".format(
                                                         vim.eval("g:TL_stl_seperator.right"))
 
+        vim.command("augroup twoline_highlight")
         vim.command("autocmd! BufEnter,BufLeave,CursorMoved <buffer> 3match none")
         vim.command("autocmd! ColorScheme * doautoa syntax")
+        vim.command("augroup END")
         vim.command("noremap <silent> <buffer> <LeftRelease> :call g:Twoline_EnterTabline()<cr><LeftRelease>")
         vim.command("noremap <silent> <buffer> <CR> :call g:Twoline_EnterTabline()<cr>")
 
