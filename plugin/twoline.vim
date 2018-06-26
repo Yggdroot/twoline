@@ -123,6 +123,9 @@ class Twoline(object):
 
         return vim.current.buffer
 
+    def escQuote(self, str):
+        return "" if str is None else str.replace("'","''")
+
     def _adjust(self, buffer):
         if buffer in self._buf_dict:
             orig_window = vim.current.window
@@ -138,8 +141,8 @@ class Twoline(object):
                 rhs = int(vim.eval("virtcol('.')"))
                 match_obj = re.search("\[{}[: ].+?]\+?".format(self._buf_dict[buffer] + 1), self._tabline_buf[0])
                 if match_obj:
-                    left = int(vim.eval("strdisplaywidth('%s')" % match_obj.string[:match_obj.start()]))
-                    right = int(vim.eval("strdisplaywidth('%s')" % match_obj.string[:match_obj.end()]))
+                    left = int(vim.eval("strdisplaywidth('%s')" % self.escQuote(match_obj.string[:match_obj.start()])))
+                    right = int(vim.eval("strdisplaywidth('%s')" % self.escQuote(match_obj.string[:match_obj.end()])))
                     if right > rhs:
                         if vim.eval("g:TL_scroll_mode") == "0":
                             vim.command("norm! {}zl".format((left + right - lhs - rhs)//2))
