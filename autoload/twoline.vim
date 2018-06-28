@@ -209,7 +209,8 @@ class Twoline(object):
             if self._buffer_window() and vim.current.buffer in self._buf_dict:
                 vim.current.buffer = self._buf_list[(self._buf_dict[vim.current.buffer] + 1) % len(self._buf_list)]
             else:
-                vim.command("wincmd p")
+                if vim.current.buffer == self._tabline_buf:
+                    vim.command("wincmd p")
                 vim.command("bn")
 
     def switch_to_previous(self):
@@ -217,7 +218,8 @@ class Twoline(object):
             if self._buffer_window() and vim.current.buffer in self._buf_dict:
                 vim.current.buffer = self._buf_list[self._buf_dict[vim.current.buffer] - 1]
             else:
-                vim.command("wincmd p")
+                if vim.current.buffer == self._tabline_buf:
+                    vim.command("wincmd p")
                 vim.command("bp")
 
     def enter_tabline(self):
