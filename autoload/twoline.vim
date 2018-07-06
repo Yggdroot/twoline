@@ -47,6 +47,8 @@ function! g:TL_tabline_init_color()
     return ""
 endfunction
 
+silent! exec s:py "pass"
+
 exec s:py "<< EOF"
 import vim
 import re
