@@ -123,6 +123,7 @@ class Twoline(object):
 
             saved_eventignore = vim.options['eventignore']
             vim.options['eventignore'] = 'all'
+            orig_mode = vim.eval("mode()")
             vim.current.window = tabline_win
             try:
                 vim.command("norm! g0")
@@ -157,6 +158,8 @@ class Twoline(object):
             finally:
                 vim.current.window = orig_window
                 vim.options['eventignore'] = saved_eventignore
+                if orig_mode in ["s", "S", "\<C-S>"]:
+                    vim.command('exec "norm! gv\<c-g>"')
 
     def update_tabline(self, change_event, buffer_number):
         if change_event:
