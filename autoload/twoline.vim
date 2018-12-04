@@ -158,7 +158,7 @@ class Twoline(object):
                 vim.current.window = orig_window
                 vim.options['eventignore'] = saved_eventignore
 
-    def update_tabline(self, change_event):
+    def update_tabline(self, change_event, buffer_number):
         if change_event:
             if not self._buffer_is_changed(vim.current.buffer):
                 return
@@ -194,7 +194,7 @@ class Twoline(object):
                                     and vim.eval("getbufvar(%d, '&buflisted')" % b.number) == "1")):
                 self._buf_list.append(b)
                 self._buf_dict[b] = i
-                self._tabline_buf[0] += "[{}{}{}]{}".format(i + 1, ':' if int(vim.eval("bufwinnr(%d)" % b.number)) > 1 else ' ',
+                self._tabline_buf[0] += "[{}{}{}]{}".format(i + 1, ':' if int(vim.eval("bufwinnr(%d)" % b.number)) > 1 and b.number != buffer_number else ' ',
                                                             re.sub("[][]", "", os.path.basename(b.name)) if b.name else "--No Name--",
                                                             '+' if b.options["modified"] else '')
             vim.command("let g:TL_total_buf_num = {}".format(len(self._buf_list)))
@@ -325,9 +325,9 @@ my_twoline.enter_tabline()
 EOF
 endfunction
 
-function! twoline#UpdateTabline(change_event)
+function! twoline#UpdateTabline(change_event, buffer_number)
 exec s:py "<< EOF"
-my_twoline.update_tabline(int(vim.eval("a:change_event")))
+my_twoline.update_tabline(int(vim.eval("a:change_event")), int(vim.eval("a:buffer_number")))
 EOF
 endfunction
 

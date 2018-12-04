@@ -19,11 +19,11 @@ endif
 
 let s:tl_vim_enter = 0
 
-function! s:UpdateTabline(change_event)
+function! s:UpdateTabline(change_event, ...)
     if s:tl_vim_enter == 0
         return
     endif
-    call twoline#UpdateTabline(a:change_event)
+    call twoline#UpdateTabline(a:change_event, a:0 > 0 ? a:1 : -1)
 endfunction
 
 function! s:VimEnter()
@@ -58,6 +58,7 @@ function! s:DefineAutocmds()
     augroup twoline
         autocmd!
         autocmd VimEnter * call s:VimEnter()
+        autocmd BufHidden * call s:UpdateTabline(0, expand('<abuf>'))
         autocmd BufWinEnter * call s:UpdateTabline(0)
         autocmd CursorMoved,CursorMovedI,BufWritePost * call s:UpdateTabline(1)
         autocmd BufDelete,BufWipeout * call s:BufferDeleted(expand('<abuf>'))
