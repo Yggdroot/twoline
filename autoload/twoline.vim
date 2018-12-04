@@ -258,6 +258,10 @@ class Twoline(object):
         if choice == 'n':
             return
         vim.current.buffer.options["bufhidden"] = "wipe"
+        if vim.eval("getbufvar(%d, '&buflisted')" % vim.current.buffer.number) == "0":
+            self.switch_to_next()
+            return
+
         if self._buffer_count() > 1:
             if vim.current.buffer == self._buf_list[-1]:
                 vim.command("buffer{} {}".format(choice, self._buf_list[self._buf_dict[vim.current.buffer] - 1].number))
