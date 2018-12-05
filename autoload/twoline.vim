@@ -169,6 +169,8 @@ class Twoline(object):
         orig_window = vim.current.window
         try:
             if self._tabline_buf is None:
+                if buffer_number != -1: # BufHidden
+                    return
                 if self._buffer_count() > 1:
                     self._tabline_buf = self._create_tabline()
                     vim.current.window = orig_window
