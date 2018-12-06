@@ -184,6 +184,8 @@ class Twoline(object):
                         vim.command("silent! {}close!".format(tabline_win.number))
                         return
                 else:   # tabline is hidden
+                    if buffer_number != -1: # BufHidden
+                        return
                     if self._buffer_count() > 1:
                         self._create_tabline()
                     else:
