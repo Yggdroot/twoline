@@ -188,6 +188,7 @@ class Twoline(object):
                         return
                     if self._buffer_count() > 1:
                         self._create_tabline()
+                        vim.current.window = orig_window
                     else:
                         return
 
