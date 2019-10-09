@@ -207,6 +207,9 @@ class Twoline(object):
                                                             '+' if b.options["modified"] else '')
             vim.command("let g:TL_total_buf_num = {}".format(len(self._buf_list)))
             self._adjust(orig_window.buffer)
+        except vim.error as e:
+            if str(e).split(':', 2)[1] != 'E11': # step to reproduce: ":<C-F>"
+                raise e
         finally:
             if self._tabline_buf:
                 self._tabline_buf.options["modifiable"] = False
