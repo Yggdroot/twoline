@@ -84,9 +84,9 @@ command! -bar TlTablineClose call s:Close()
 command! -bar TlTablineEnable call s:DefineAutocmds() | call s:UpdateTabline(0)
 command! -bar TlTablineDisable TlTablineClose | call s:UndefineAutocmds()
 
-nnoremap <silent> <Plug>TlBufferNext :echo<CR>:silent TlBufferNext<CR>
-nnoremap <silent> <Plug>TlBufferPrev :echo<CR>:silent TlBufferPrev<CR>
-nnoremap <silent> <Plug>TlBufferDelete :echo<CR>:silent TlBufferDelete<CR>
+nnoremap <silent> <Plug>TlBufferNext :echo<CR>:TlBufferNext<CR>
+nnoremap <silent> <Plug>TlBufferPrev :echo<CR>:TlBufferPrev<CR>
+nnoremap <silent> <Plug>TlBufferDelete :echo<CR>:TlBufferDelete<CR>
 nnoremap <silent> <Plug>TlTablineClose :TlTablineClose<CR>
 nnoremap <silent> <Plug>TlTablineEnable :TlTablineEnable<CR>
 nnoremap <silent> <Plug>TlTablineDisable :TlTablineDisable<CR>
