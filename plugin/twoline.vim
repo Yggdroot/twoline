@@ -23,6 +23,10 @@ function! s:UpdateTabline(change_event, ...)
     if s:tl_vim_enter == 0
         return
     endif
+    if a:change_event == 1 && s:tl_vim_enter == 1
+        let s:tl_vim_enter = 2
+        return
+    endif
     call twoline#UpdateTabline(a:change_event, a:0 > 0 ? a:1 : -1)
 endfunction
 
