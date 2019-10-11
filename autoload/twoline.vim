@@ -219,21 +219,27 @@ class Twoline(object):
 
     def switch_to_next(self):
         if self._buffer_count() > 1:
-            if self._buffer_window() and vim.current.buffer in self._buf_dict:
-                vim.current.buffer = self._buf_list[(self._buf_dict[vim.current.buffer] + 1) % len(self._buf_list)]
-            else:
-                if vim.current.buffer == self._tabline_buf:
-                    vim.command("wincmd p")
-                vim.command("bn")
+            try:
+                if self._buffer_window() and vim.current.buffer in self._buf_dict:
+                    vim.current.buffer = self._buf_list[(self._buf_dict[vim.current.buffer] + 1) % len(self._buf_list)]
+                else:
+                    if vim.current.buffer == self._tabline_buf:
+                        vim.command("wincmd p")
+                    vim.command("bn")
+            except vim.error:
+                pass
 
     def switch_to_previous(self):
         if self._buffer_count() > 1:
-            if self._buffer_window() and vim.current.buffer in self._buf_dict:
-                vim.current.buffer = self._buf_list[self._buf_dict[vim.current.buffer] - 1]
-            else:
-                if vim.current.buffer == self._tabline_buf:
-                    vim.command("wincmd p")
-                vim.command("bp")
+            try:
+                if self._buffer_window() and vim.current.buffer in self._buf_dict:
+                    vim.current.buffer = self._buf_list[self._buf_dict[vim.current.buffer] - 1]
+                else:
+                    if vim.current.buffer == self._tabline_buf:
+                        vim.command("wincmd p")
+                        vim.command("bp")
+            except vim.error:
+                pass
 
     def enter_tabline(self):
         if vim.current.buffer != self._tabline_buf:
