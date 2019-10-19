@@ -134,6 +134,12 @@ endfunction
 
 call s:InitVar('g:TL_stl_item', s:TL_stl_item)
 call s:InitVar('g:TL_stl_origin_mode', "")
+call s:InitVar('g:TL_stl_seperator', {
+            \ 'left': '►',
+            \ 'right': '◄',
+            \ 'font': ''
+            \})
+call s:InitVar('g:TL_scroll_mode', 0)
 
 function! s:InitColor()
     hi! def TL_stl_blank       gui=NONE guifg=#9e9e9e guibg=#363636 cterm=NONE ctermfg=247 ctermbg=236

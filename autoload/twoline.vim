@@ -19,19 +19,6 @@ if exists("g:tl_python_version")
     let s:py = "py".string(g:tl_python_version)
 endif
 
-function! s:InitVar(var, value)
-    if !exists(a:var)
-        exec 'let '.a:var.'='.string(a:value)
-    endif
-endfunction
-
-call s:InitVar('g:TL_scroll_mode', 0)
-call s:InitVar('g:TL_stl_seperator', {
-            \ 'left': '►',
-            \ 'right': '◄',
-            \ 'font': ''
-            \})
-
 function! g:TL_tabline_init_color()
     if synIDattr(synIDtrans(hlID("TL_tabline_right")), "fg", "gui") == ""
         hi! def TL_tabline_right gui=NONE guifg=#ebebeb guibg=#707070 cterm=NONE ctermfg=255 ctermbg=242
