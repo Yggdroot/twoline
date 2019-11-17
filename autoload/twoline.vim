@@ -29,7 +29,7 @@ function! g:TL_tabline_init_color()
         exec printf("hi! def TL_tabline_sep_right gui=NONE guifg=%s guibg=%s cterm=NONE ctermfg=%s ctermbg=%s font=%s",
                     \ synIDattr(fg_synId, "bg", "gui"), synIDattr(bg_synId, "bg", "gui"),
                     \ synIDattr(fg_synId, "bg", "cterm"), synIDattr(bg_synId, "bg", "cterm"),
-                    \ g:TL_stl_seperator.font != "" ? "'" . g:TL_stl_seperator.font . "'" : "NONE")
+                    \ g:TL_stl_separator.font != "" ? "'" . g:TL_stl_separator.font . "'" : "NONE")
     endif
     return ""
 endfunction
@@ -89,7 +89,7 @@ class Twoline(object):
         vim.current.window.options["winfixheight"] = True
         vim.current.window.options["winfixwidth"] = True
         vim.current.window.options["statusline"] = "%{{g:TL_tabline_init_color()}}%#TL_tabline#%=%#TL_tabline_sep_right#{0}%#TL_tabline_right# Total: %-3{{g:TL_total_buf_num}}".format(
-                                                        vim.eval("g:TL_stl_seperator.right"))
+                                                        vim.eval("g:TL_stl_separator.right"))
 
         vim.command("augroup twoline_highlight")
         vim.command("autocmd! BufEnter,BufLeave,CursorMoved <buffer> 3match none")

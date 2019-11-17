@@ -134,7 +134,7 @@ endfunction
 
 call s:InitVar('g:TL_stl_item', s:TL_stl_item)
 call s:InitVar('g:TL_stl_origin_mode', "")
-call s:InitVar('g:TL_stl_seperator', {
+call s:InitVar('g:TL_stl_separator', {
             \ 'left': '►',
             \ 'right': '◄',
             \ 'font': ''
@@ -168,8 +168,8 @@ function! s:InitColor()
     hi! def TL_stl_right_4     gui=NONE guifg=#9e9e9e guibg=#363636 cterm=NONE ctermfg=247 ctermbg=236
     hi! def link TL_stl_right_5 TL_stl_blank
 
-    if !has_key(g:TL_stl_seperator, "font")
-        let g:TL_stl_seperator["font"] = ""
+    if !has_key(g:TL_stl_separator, "font")
+        let g:TL_stl_separator["font"] = ""
     endif
 
     for i in range(5)
@@ -180,11 +180,11 @@ function! s:InitColor()
         exec printf("hi! def TL_stl_sep_left_%d gui=NONE guifg=%s guibg=%s cterm=NONE ctermfg=%s ctermbg=%s font=%s",
                     \ i, synIDattr(synId_left_0, "bg", "gui"), synIDattr(synId_left_1, "bg", "gui"),
                     \ synIDattr(synId_left_0, "bg", "cterm"), synIDattr(synId_left_1, "bg", "cterm"),
-                    \ g:TL_stl_seperator.font != "" ? "'" . g:TL_stl_seperator.font . "'" : "NONE")
+                    \ g:TL_stl_separator.font != "" ? "'" . g:TL_stl_separator.font . "'" : "NONE")
         exec printf("hi! def TL_stl_sep_right_%d gui=NONE guifg=%s guibg=%s cterm=NONE ctermfg=%s ctermbg=%s font=%s",
                     \ i, synIDattr(synId_right_0, "bg", "gui"), synIDattr(synId_right_1, "bg", "gui"),
                     \ synIDattr(synId_right_0, "bg", "cterm"), synIDattr(synId_right_1, "bg", "cterm"),
-                    \ g:TL_stl_seperator.font != "" ? "'" . g:TL_stl_seperator.font . "'" : "NONE")
+                    \ g:TL_stl_separator.font != "" ? "'" . g:TL_stl_separator.font . "'" : "NONE")
     endfor
 
     let mode = ["normal", "insert", "visual", "visual_line", "visual_block", "select", "select_line", "select_block", "replace", "terminal"]
@@ -194,7 +194,7 @@ function! s:InitColor()
         exec printf("hi! def TL_stl_sep_%s gui=NONE guifg=%s guibg=%s cterm=NONE ctermfg=%s ctermbg=%s font=%s",
                     \ m, synIDattr(fg_synId, "bg", "gui"), synIDattr(bg_synId, "bg", "gui"),
                     \ synIDattr(fg_synId, "bg", "cterm"), synIDattr(bg_synId, "bg", "cterm"),
-                    \ g:TL_stl_seperator.font != "" ? "'" . g:TL_stl_seperator.font . "'" : "NONE")
+                    \ g:TL_stl_separator.font != "" ? "'" . g:TL_stl_separator.font . "'" : "NONE")
     endfor
 endfunction
 
@@ -230,8 +230,8 @@ function! g:TL_stl_link()
 endfunction
 
 function! g:TL_statusline()
-    let sep_left = g:TL_stl_seperator.left
-    let sep_right = g:TL_stl_seperator.right
+    let sep_left = g:TL_stl_separator.left
+    let sep_right = g:TL_stl_separator.right
     let stl  = "%{g:TL_stl_link()}"
     let stl .= g:TL_stl_left(0) == "" ? "" : "%#TL_stl_left_0# " . g:TL_stl_left(0) . " %#TL_stl_sep_left_0#" . sep_left
     let stl .= g:TL_stl_left(1) == "" ? "" : "%#TL_stl_left_1# " . g:TL_stl_left(1) . " %#TL_stl_sep_left_1#" . sep_left
