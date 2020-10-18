@@ -84,7 +84,10 @@ class Twoline(object):
         vim.current.window.options["spell"] = False
         vim.current.window.options["wrap"] = False
         vim.current.window.options["foldenable"] = False
-        vim.current.window.options["foldcolumn"] = 0
+        try:
+            vim.current.window.options["foldcolumn"] = 0
+        except vim.error:
+            vim.current.window.options["foldcolumn"] = '0'
         vim.current.window.options["foldmethod"] = "manual"
         vim.current.window.options["winfixheight"] = True
         vim.current.window.options["winfixwidth"] = True
