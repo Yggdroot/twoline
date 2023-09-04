@@ -83,6 +83,7 @@ class Twoline(object):
         vim.current.window.options["relativenumber"] = False
         vim.current.window.options["spell"] = False
         vim.current.window.options["wrap"] = False
+        vim.current.window.options["signcolumn"] = "no"
         vim.current.window.options["foldenable"] = False
         try:
             vim.current.window.options["foldcolumn"] = 0

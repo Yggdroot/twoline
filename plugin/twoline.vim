@@ -139,7 +139,7 @@ call s:InitVar('g:TL_stl_separator', {
             \ 'right': '◄',
             \ 'font': ''
             \})
-call s:InitVar('g:TL_scroll_mode', 0)
+call s:InitVar('g:TL_scroll_mode', 1)
 
 function! s:InitColor()
     hi! def TL_stl_blank       gui=NONE guifg=#9e9e9e guibg=#363636 cterm=NONE ctermfg=247 ctermbg=236
