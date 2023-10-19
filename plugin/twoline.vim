@@ -117,12 +117,12 @@ endfunction
 let s:TL_stl_item  = {
             \ 'left': {
             \   0: "%{g:TL_mode()}%{&paste ? '  PASTE' : ''}",
-            \   1: "%{&readonly ? '\U1f512' : ''}%<%F%m 『%{&ft!=''?&ft:'?'}』",
+            \   1: "%{&readonly ? '\U1f512' : ''}%<%F %{&modifiable ? '' : '[-]'}[%{&ft!=''?&ft:'?'}]",
             \ },
             \ 'right':{
             \   0: "%3p%%/%L",
             \   1: "%7(%l,%v%)",
-            \   2: "『%{&ff}』『%{&fenc==''?&enc:&fenc}』"
+            \   2: "[%{&ff}, %{&fenc==''?&enc:&fenc}]"
             \ }
             \}
 
