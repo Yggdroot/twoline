@@ -121,7 +121,7 @@ class Twoline(object):
                 lhs = int(vim.eval("virtcol('.')")) - 1
                 vim.command("norm! g$")
                 rhs = int(vim.eval("virtcol('.')"))
-                match_obj = re.search("\[{}[: ].+?]\+?".format(self._buf_dict[buffer] + 1), self._tabline_buf[0])
+                match_obj = re.search(r"\[{}[: ].+?]\+?".format(self._buf_dict[buffer] + 1), self._tabline_buf[0])
                 if match_obj:
                     left = int(vim.eval("strdisplaywidth('%s')" % self.escQuote(match_obj.string[:match_obj.start()])))
                     right = int(vim.eval("strdisplaywidth('%s')" % self.escQuote(match_obj.string[:match_obj.end()])))
@@ -149,8 +149,8 @@ class Twoline(object):
             finally:
                 vim.current.window = orig_window
                 vim.options['eventignore'] = saved_eventignore
-                if orig_mode in ["s", "S", "\<C-S>"]:
-                    vim.command('exec "norm! gv\<c-g>"')
+                if orig_mode in ["s", "S", r"\<C-S>"]:
+                    vim.command(r'exec "norm! gv\<c-g>"')
 
     def update_tabline(self, change_event, buffer_number):
         if change_event:
@@ -238,7 +238,7 @@ class Twoline(object):
         line = vim.current.buffer[0]
         _, cursor_col = vim.current.window.cursor
         left = line.rfind("[", 0, cursor_col+1)
-        number = int(re.search("\d+", line[left+1:]).group(0))
+        number = int(re.search(r"\d+", line[left+1:]).group(0))
 
         saved_eventignore = vim.options['eventignore']
         vim.options['eventignore'] = 'all'
