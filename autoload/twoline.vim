@@ -298,7 +298,7 @@ class Twoline(object):
                     vim.options['eventignore'] = saved_eventignore
 
                 if buf_count > 1:
-                    self.update_tabline(0)
+                    self.update_tabline(0, -1)
 
             elif buf_count < 2:
                 vim.command("{}close!".format(tabline_win.number))
