@@ -21,12 +21,12 @@ endif
 
 function! g:TL_tabline_init_color()
     if synIDattr(synIDtrans(hlID("TL_tabline_right")), "fg", "gui") == ""
-        hi! def TL_tabline_right gui=NONE guifg=#ebebeb guibg=#707070 cterm=NONE ctermfg=255 ctermbg=242
-        hi! def TL_tabline       gui=NONE guifg=#87ceeb guibg=#4d4d4d cterm=NONE ctermfg=117 ctermbg=239
+        hi! def TL_tabline_right gui=nocombine guifg=#ebebeb guibg=#707070 cterm=nocombine ctermfg=255 ctermbg=242
+        hi! def TL_tabline       gui=nocombine guifg=#87ceeb guibg=#4d4d4d cterm=nocombine ctermfg=117 ctermbg=239
 
         let fg_synId = synIDtrans(hlID("TL_tabline_right"))
         let bg_synId = synIDtrans(hlID("TL_tabline"))
-        exec printf("hi! def TL_tabline_sep_right gui=NONE guifg=%s guibg=%s cterm=NONE ctermfg=%s ctermbg=%s font=%s",
+        exec printf("hi! def TL_tabline_sep_right gui=nocombine guifg=%s guibg=%s cterm=nocombine ctermfg=%s ctermbg=%s font=%s",
                     \ synIDattr(fg_synId, "bg", "gui"), synIDattr(bg_synId, "bg", "gui"),
                     \ synIDattr(fg_synId, "bg", "cterm"), synIDattr(bg_synId, "bg", "cterm"),
                     \ g:TL_stl_separator.font != "" ? "'" . g:TL_stl_separator.font . "'" : "NONE")
